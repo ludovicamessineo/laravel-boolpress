@@ -37,7 +37,9 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        $request->validate($this->getValidationRules());
+        
         $data = $request->all();
         $post = new Post();
         $post->fill($data);
@@ -106,6 +108,14 @@ class PostController extends Controller
         }
 
         return $slug;
+
+    }
+
+    private function getValidationRules() {
+        return [
+            'title' => 'required|max:255',
+            'content' => 'required|max:30000'
+        ];
     }
 }
 
