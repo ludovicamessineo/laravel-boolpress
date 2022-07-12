@@ -1,16 +1,15 @@
 <template>
-    <div>
-        <h1>Front office</h1>
-        <WorkInProgress />
+    <div class="container text-center mt-4">
+        <Post />
     </div>
 </template>
 
 <script>
-import WorkInProgress from '../components/WorkInProgress.vue';
+import Post from "../components/Post.vue"
 export default {
     name: 'App',
     components: {
-        WorkInProgress
+        Post
     }
 }
 </script>
