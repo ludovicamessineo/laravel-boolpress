@@ -59,10 +59,9 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
-
         $category = $post->category;
 
-        return view('admin.posts.show', compact('post') );
+        return view('admin.posts.show', compact('post', 'category') );
     }
 
     /**
@@ -74,7 +73,8 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::findOrFail($id);
-        return view('admin.posts.edit', compact('post'));
+        $categories = Category::all();
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -114,7 +114,8 @@ class PostController extends Controller
     private function getValidationRules() {
         return [
             'title' => 'required|max:255',
-            'content' => 'required|max:30000'
+            'content' => 'required|max:30000',
+            'category_id' => 'nullable|exists:categories,id'
         ];
     }
 }
