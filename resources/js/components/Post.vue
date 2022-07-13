@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-      <h2>Post:</h2>
+      <h2 class="mb-3">Elenco dei post</h2>
       <div class="row row-cols-3">
 
           <div v-for="post in posts" :key="post.id" class="col">
