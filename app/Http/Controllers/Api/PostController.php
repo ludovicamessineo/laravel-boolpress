@@ -10,9 +10,28 @@ class PostController extends Controller
 {
     public function index() {
         $posts = Post::all();
+        $post_with_categories = [];
+        foreach ($posts as $post) {
+            $category = $post->category;
+            $post['category'] = $category;
+            $post_with_categories[] = $post;
+        }
+
         return response()->json([
             'success' =>true,
-            'results' => $posts
+            'results' => $post_with_categories
         ]);
     }
 }
+
+// class PostController extends Controller
+// {
+//     public function index() {
+//         $posts = Post::with(['category']);
+
+//         return response()->json([
+//             'success' =>true,
+//             'results' => $posts
+//         ]);
+//     }
+// }

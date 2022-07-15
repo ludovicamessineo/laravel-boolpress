@@ -4,14 +4,7 @@
       <div class="row row-cols-3">
 
           <div v-for="post in posts" :key="post.id" class="col">
-              <div class="card mb-3">
-                  <div class="card-body">
-                      <h5 class="card-title">Titolo card</h5>
-                      <p class="card-text">
-                          {{ cutText(post.content, 50) }}
-                      </p>
-                  </div>
-              </div>
+              <CardPost :post="post"/>
           </div>
 
       </div>
@@ -19,8 +12,12 @@
 </template>
 
 <script>
+import CardPost from "../components/CardPost.vue"
 export default {
     name: "Post",
+    components: {
+        CardPost,
+    },
     data() {
         return {
             posts: []
@@ -35,13 +32,7 @@ export default {
             .then(resp => {
                 this.posts = resp.data.results;
             })
-        },
-        cutText(text, maxCharNumb) {
-            if (text.length > maxCharNumb) {
-                return text.substr(0, maxCharNumb) + '...';
-            }
-            return text;
-        }
+        }   
     }
 }
 </script>
