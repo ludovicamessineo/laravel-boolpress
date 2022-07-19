@@ -1,8 +1,8 @@
 <template>
   <div class="card mb-3">
         <div class="card-body">
-          <p>Categoria: {{ post.category ? post.category.name : 'nessuna' }} </p>
-          <h5 class="card-title">Titolo card</h5>
+          <p>Categoria: {{ categoryName }} </p>
+          <h5 class="card-title"> {{ post.title }} </h5>
           <p class="card-text">
              {{ cutText(post.content, 50) }}
           </p>
@@ -14,7 +14,12 @@
 export default {
     name: "CardPost",
     props: {
-        Post: Object
+        post: Object
+    },
+    computed: {
+        categoryName() {
+            return this.post.category ? this.post.category.name : "nessuna";
+        }
     },
     methods: {
         cutText(text, maxCharNumb) {
