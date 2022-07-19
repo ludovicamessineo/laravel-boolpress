@@ -1,8 +1,15 @@
 <template>
   <div class="container">
-      <h1> {{ post.title }} </h1>
-      <p>Category: {{ categoryName }} </p>
-      <p> {{ post.content }} </p>
+      <section v-if="post">
+        <h1> {{ post.title }} </h1>
+        <p>Category: {{ categoryName }} </p>
+        <p> {{ post.content }} </p>
+      </section>
+
+      <section v-else>
+          <h2>Caricamento</h2>
+      </section>
+
   </div>
 </template>
 
@@ -25,8 +32,13 @@ export default {
     methods: {
         getPostDetails() {
             const slug = this.$route.params.slug;
-            axios.get(`/api/posts/${slug}`).then((resp) => {
-                this.post = resp.data.results;
+            axios.get(`/api/post/${slug}`).then((resp) => {
+                if (resp.data.success) {
+                    this.post = resp.data.results;
+                } else {
+                    this.$router.push({ name: 'not-found'});
+                }
+                console.log(this.post);
             });
         }
     }

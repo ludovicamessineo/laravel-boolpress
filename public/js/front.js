@@ -2075,8 +2075,16 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var slug = this.$route.params.slug;
-      axios.get("/api/posts/".concat(slug)).then(function (resp) {
-        _this.post = resp.data.results;
+      axios.get("/api/post/".concat(slug)).then(function (resp) {
+        if (resp.data.success) {
+          _this.post = resp.data.results;
+        } else {
+          _this.$router.push({
+            name: 'not-found'
+          });
+        }
+
+        console.log(_this.post);
       });
     }
   }
@@ -2127,7 +2135,19 @@ var render = function render() {
     staticClass: "card-title"
   }, [_vm._v(" " + _vm._s(_vm.post.title) + " ")]), _vm._v(" "), _c("p", {
     staticClass: "card-text"
-  }, [_vm._v("\n             " + _vm._s(_vm.cutText(_vm.post.content, 50)) + "\n          ")])])]);
+  }, [_vm._v("\n             " + _vm._s(_vm.cutText(_vm.post.content, 50)) + "\n          ")])]), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("router-link", {
+    staticClass: "card-link",
+    attrs: {
+      to: {
+        name: "single-post",
+        params: {
+          slug: _vm.post.slug
+        }
+      }
+    }
+  }, [_vm._v("Leggi post")])], 1)]);
 };
 
 var staticRenderFns = [];
@@ -2392,7 +2412,7 @@ var render = function render() {
 
   return _c("div", {
     staticClass: "container"
-  }, [_c("h1", [_vm._v(" " + _vm._s(_vm.post.title) + " ")]), _vm._v(" "), _c("p", [_vm._v("Category: " + _vm._s(_vm.categoryName) + " ")]), _vm._v(" "), _c("p", [_vm._v(" " + _vm._s(_vm.post.content) + " ")])]);
+  }, [_vm.post ? _c("section", [_c("h1", [_vm._v(" " + _vm._s(_vm.post.title) + " ")]), _vm._v(" "), _c("p", [_vm._v("Category: " + _vm._s(_vm.categoryName) + " ")]), _vm._v(" "), _c("p", [_vm._v(" " + _vm._s(_vm.post.content) + " ")])]) : _c("section", [_c("h2", [_vm._v("Caricamento")])])]);
 };
 
 var staticRenderFns = [];
@@ -53646,6 +53666,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     component: _pages_SinglePost_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   }, {
     path: "/*",
+    name: "not-found",
     component: _pages_PageNotFound_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   }]
 });

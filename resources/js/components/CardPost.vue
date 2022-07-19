@@ -7,6 +7,9 @@
              {{ cutText(post.content, 50) }}
           </p>
         </div>
+        <div class="card-body">
+            <router-link :to="{ name: 'single-post', params: {slug: post.slug} }" class="card-link">Leggi post</router-link>
+        </div>
   </div>
 </template>
 
