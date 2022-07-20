@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Post;
+use Illuminate\Foundation\Console\StorageLinkCommand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -42,6 +44,12 @@ class PostController extends Controller
         $request->validate($this->getValidationRules());
 
         $data = $request->all();
+
+        if (isset($data['image'])) {
+            $image_path = Storage::put('post_covers', $data['image']);
+            $data['cover'] = $image_path;
+        }
+
         $post = new Post();
         $post->fill($data);
         $post->slug = Post::generatePostSlug($post->title);
@@ -87,9 +95,19 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate($this->getValidationRules() );
+
         $data = $request->all();
 
         $post = Post::findOrFail($id);
+
+        if (isset($data['image'])) {
+            if ($post->cover) {
+                Storage::delete($post->cover);
+            }
+            $image_path = Storage::put('post_covers', $data['image']);
+            $data['cover'] = $image_path;
+        }
+
         $post->fill($data);
         $post->slug = Post::generatePostSlug($post->title);
         $post->save();
@@ -106,7 +124,13 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->tags()->sync([]);
+        if($post->cover) {
+            Storage::delete($post->cover);
+        }
+        $post->delete();
+        return redirect()->route('admin.posts.index');
     }
 
 
@@ -115,7 +139,8 @@ class PostController extends Controller
         return [
             'title' => 'required|max:255',
             'content' => 'required|max:30000',
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'image' => 'image|max:512'
         ];
     }
 }

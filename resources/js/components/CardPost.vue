@@ -1,5 +1,6 @@
 <template>
   <div class="card mb-3">
+        <img class="card-img-top" :src="post.cover" alt="">
         <div class="card-body">
           <p>Categoria: {{ categoryName }} </p>
           <h5 class="card-title"> {{ post.title }} </h5>

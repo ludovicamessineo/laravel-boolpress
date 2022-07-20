@@ -2129,7 +2129,13 @@ var render = function render() {
 
   return _c("div", {
     staticClass: "card mb-3"
-  }, [_c("div", {
+  }, [_c("img", {
+    staticClass: "card-img-top",
+    attrs: {
+      src: _vm.post.cover,
+      alt: ""
+    }
+  }), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, [_c("p", [_vm._v("Categoria: " + _vm._s(_vm.categoryName) + " ")]), _vm._v(" "), _c("h5", {
     staticClass: "card-title"
@@ -2412,7 +2418,12 @@ var render = function render() {
 
   return _c("div", {
     staticClass: "container"
-  }, [_vm.post ? _c("section", [_c("h1", [_vm._v(" " + _vm._s(_vm.post.title) + " ")]), _vm._v(" "), _c("p", [_vm._v("Category: " + _vm._s(_vm.categoryName) + " ")]), _vm._v(" "), _c("p", [_vm._v(" " + _vm._s(_vm.post.content) + " ")])]) : _c("section", [_c("h2", [_vm._v("Caricamento")])])]);
+  }, [_vm.post ? _c("section", [_c("h1", [_vm._v(" " + _vm._s(_vm.post.title) + " ")]), _vm._v(" "), _vm.post.cover ? _c("div", [_c("img", {
+    attrs: {
+      src: _vm.post.cover,
+      alt: ""
+    }
+  })]) : _vm._e(), _vm._v(" "), _c("p", [_vm._v("Category: " + _vm._s(_vm.categoryName) + " ")]), _vm._v(" "), _c("p", [_vm._v(" " + _vm._s(_vm.post.content) + " ")])]) : _c("section", [_c("h2", [_vm._v("Caricamento")])])]);
 };
 
 var staticRenderFns = [];

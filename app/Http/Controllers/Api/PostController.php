@@ -16,6 +16,11 @@ class PostController extends Controller
             $post['category'] = $category;
             $post_with_categories[] = $post;
         }
+        foreach ($posts as $post) {
+            if($post->cover) {
+                $post->cover = url('storage/' . $post->cover);
+            }
+        }
 
         return response()->json([
             'success' =>true,
@@ -26,6 +31,9 @@ class PostController extends Controller
     public function show($slug) {
         $post = Post::where('slug', '=', $slug)->with(['category'])->first();
         if ($post) {
+            if($post->cover) {
+                $post->cover = url('storage/' . $post->cover);
+            }
             return response()->json([
                 'success' => true,
                 'results' => $post
